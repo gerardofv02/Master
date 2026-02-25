@@ -1,0 +1,6 @@
+Lenguaje SQL:
+Dividido en sublenguajes:
+	- LDD (Lenguaje de definición de datos): Create, allter, drop (Creación de DB y tablas)
+	- LMD (Lneguaje de manipulaciópjn de datos): Insert, Update, Delete (Queries)
+	- LCT (Lenguaje de control de transacciones): Commit, Rollback (Control de datos (por ejemplo: Uso de commit cuando llevas muchos registros descargados para que, si falla, volver a lanzarlo desde ese punto))
+	- LCD (Lenguaje control de datos): Grant, Revoke (Control de accesos)
