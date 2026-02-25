@@ -1,9 +1,14 @@
 /*
+- UNIQUE KEY(CAMPO1,campo2,....campon) -> Sirve para cuando hya más de una clave primaria, para hacer una única clave primaria y dejar el resto como claves únicas
 - FOREIGN KEY(CAMPO) -> Cuando se usa la clave primaria de una tabla en otra tabla. Va acompañado siempre de 'REFERENCES TABLA(CAMPO)'
 - PRIMARY KEY(CAMPO1,campo2,....campon) -> Para identificar la clave primera de una tabla (el distintivo único)
 - ON DELETE CASCADE: Sirve para actualizar un campo (que viene de una foreign key) cuando se ha borrado dicho registro de la otra tabla
 - ON UPDATE CASCADE: Sirve para actualizar un campo (que viene de una foreign key) cuando se ha actualizado dicho registro de la otra tabla
 - ON DELETE RESTRICT: Sirve para eliminar un registro (que viene de una foreign key) cuando se ha borrado dicho registro de la otra tabla
+- CHECK: Cuando creamos un campo, se puede poner este atributo a la derecha de su declaración para ver si cumple con los requisitos del campo. Por ejemplo: Si tengo un campo que es número de teléfono, este campo (en españa) no debe superar más de nueve dígitos, no puede empezar por 0,...:
+    telefono varchar(9) not null check (telefono REGEXP '^[0-9]{9}$')
+- DEFAULT: Cuando creamos un campo, se puede pponer este atributo a la derecha de si declaración indicando con que valor quiere que empieze. Ejemplo:
+    telefono varchar(9) default '999999999'
 */
 
 DROP DATABASE IF EXISTS PINACOTECAS;
