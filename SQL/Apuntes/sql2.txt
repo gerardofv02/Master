@@ -4,3 +4,59 @@ Dividido en sublenguajes:
 	- LMD (Lneguaje de manipulaciópjn de datos): Insert, Update, Delete (Queries)
 	- LCT (Lenguaje de control de transacciones): Commit, Rollback (Control de datos (por ejemplo: Uso de commit cuando llevas muchos registros descargados para que, si falla, volver a lanzarlo desde ese punto))
 	- LCD (Lenguaje control de datos): Grant, Revoke (Control de accesos)
+
+Cosas importantes de los lenguajes:
+/*
+- UNIQUE KEY(CAMPO1,campo2,....campon) -> Sirve para cuando hya más de una clave primaria, para hacer una única clave primaria y dejar el resto como claves únicas
+- FOREIGN KEY(CAMPO) -> Cuando se usa la clave primaria de una tabla en otra tabla. Va acompañado siempre de 'REFERENCES TABLA(CAMPO)'
+- PRIMARY KEY(CAMPO1,campo2,....campon) -> Para identificar la clave primera de una tabla (el distintivo único)
+- ON DELETE CASCADE: Sirve para actualizar un campo (que viene de una foreign key) cuando se ha borrado dicho registro de la otra tabla
+- ON UPDATE CASCADE: Sirve para actualizar un campo (que viene de una foreign key) cuando se ha actualizado dicho registro de la otra tabla
+- ON DELETE RESTRICT: Sirve para eliminar un registro (que viene de una foreign key) cuando se ha borrado dicho registro de la otra tabla
+- CHECK: Cuando creamos un campo, se puede poner este atributo a la derecha de su declaración para ver si cumple con los requisitos del campo. Por ejemplo: Si tengo un campo que es número de teléfono, este campo (en españa) no debe superar más de nueve dígitos, no puede empezar por 0,...:
+    telefono varchar(9) not null check (telefono REGEXP '^[0-9]{9}$')
+- DEFAULT: Cuando creamos un campo, se puede pponer este atributo a la derecha de si declaración indicando con que valor quiere que empieze. Ejemplo:
+    telefono varchar(9) default '999999999'
+*/
+
+/* Ejemplos de insert:
+2 formas:
+	- INSERT INTO X VALUES ('',...., NCAMPOS)
+    - INSERT INTO X (CAMPO1, CAMPO3) VALUES ('','')
+La primera forma es para rellenar todos los campos
+La segunda forma es para insertar solo los campos específicos (deberían estar los imprensindibles)
+*/
+
+/*Estructura select:
+SELECT [*=TODO/CAMPO1,...,CAMPON]
+FROM [TABLA]
+WHERE [CONDICION]
+GROUP BY [NOMBRE_CAMPO] (PARA AGRUPAR CUANDO HAY VARIOS REGISTROS CON UN CAMPO SIMILAR. POR EJEMPLO, QUIERO AGRUPAR POR PARTIDOS (GROUP BY PARTIDO) Y ME SALDRÍAN AGRUPADOS POR PARTIDOS
+HAVING (CONDICION) EJEMPLO: HAVING COUNT(*) > 1 (QUE HAYA AL MENOS UNO DE LOS CAMPOS CON MÁS DE UN REGISTRO)
+ORDER BY [NOMBRE_CAMPO] PARA ORDENAR LOS REGISTROS SEGUN X CAMPO (ASC/DESC)
+LIMIT [NUMERO] SIRVE PARA QUE SAQUE X NUMERO DE REGISTROS COMO MAXIMO
+*/
+
+/*INICIO FUNCIONES AGREGADAS*/
+/*
+LAS FUNCIONES AGREGADAS SON PARA OPERAR CON VALORES Y CAMPOS DE LAS TABLAS Y DEVUELVEN UN SOLO VALOR
+SON:
+AVG(CAMPO) -> SIRVE PARA DEVOLVER LA MEDIA DE TODOS LOS VALORES DE LOS REGISTROS DE LOS CAMPOS (NUMÉRICOS)
+MIN(CAMPO) -> SIRVE PARA DEVOLVER EL VALOR MÁS BAJO DE TODOS LOS REGISTROS DE UN CAMPO
+MAX(CAMPO) -> SIRVE PARA DEVOLVER EL VALOR MÁS ALTO DE TODOS LOS REGISTROS DE UN CAMPO
+SUM(CAMPO) -> SIRVE PARA DEVOLVER LA SUMA DE TODOS LOS VALORES DE LOS REGISTROS DE UN CAMPO
+COUNT(CAMPO) -> SIRVE PARA DEVOLVER LA CANTIDAD DE FILAS NO NULAS
+
+ESTAS NO SE PUEDEN PONER EN WHERE, CON LO QUE HABRÍA QUE HACER QUERIES ANIDADAS (POCO EFICIENTES, VER SI SE PUEDE RESOLVER CON INNER)
+
+HAY QUE AGREGAR COALESCE CUANDO LOS CAMPOS PUEDEN VERNI COMO NULL PARA EVITAR PROBLEMAS: COALESCE (SUM(CAMPO), 0) -> DEVUELVE 0 CUANDO ES NULL
+
+*/
+
+/* VISTAS*/
+/*
+Las vistas sirven para crear una vista especial para una tabla (como una tabla nueva). Es decir, se hace un select que se quiere
+por ejemplo obtener los pintores mayores de 18 años, y esta vista haría referencia a la tabla principal de pintores pero con esta
+condición siempre
+
+*/
