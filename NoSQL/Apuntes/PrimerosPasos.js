@@ -1,34 +1,34 @@
 use Master;
-/*db.createCollection("Master_Prueba", {
-      validator: { $jsonSchema: {
-         bsonType: "object",
-         required: [ "phone" ],
-         properties: {
-            phone: {
-               bsonType: "string",
-               description: "must be a string and is required"
-            },
-            email: {
-               bsonType : "string",
-               pattern : "@test\.com$",
-               description: "must be a string and match the regular expression pattern"
-            },
-            status: {
-               enum: [ "Unknown", "Incomplete" ],
-               description: "can only be one of the enum values"
-            }
+db.createCollection("Master_Prueba_Carga", {
+   validator: { $jsonSchema: {
+      bsonType: "object",
+      required: ["phone"],
+      properties: {
+         phone: {
+            bsonType: "string",
+            description: "must be a string and is required"
+         },
+         email: {
+            bsonType: "string",
+            pattern: "@test\\.com$",
+            description: "must match the regex"
+         },
+         status: {
+            enum: ["unknown", "incomplete"],
+            description: "allowed values"
          }
-      } }
+      }
+   }}
 });
-*/
+
 use Master
 
 db
 
 show collections
 
-//db.Master_Primera_Clase.insertOne({"test": "test"})
-//db.Master_Prueba_Carga.find()
+db.Master_Primera_Clase.insertOne({"test": "test"})
+db.Master_Primera_Clase.find()
 
 show dbs
 use Master
@@ -121,3 +121,36 @@ var query6 = {"nombre": "jerry2"}
 db.Master_Prueba_Carga.deleteMany(query6)
 db.Master_Prueba_Carga.find()
 /* Fin jugando con los deletes*/
+
+/* Jugando con los finds avanzados*/
+/* Posibles selectores:
+● $eq. Igual al valor especificado
+● $gt. Mayor que valor especificado
+● $gte. Mayor o igual que valor especificado
+● $in. Cualquier valor de los especificados (array)
+● $lt. Menor que valor especificado
+● $lte. Menos o igual que valor especificado
+● $ne. Distinto de valor especificado
+● $nin. Cualquier valor que no esté especificado (array)
+
+
+$and. Que cumpla todas las condiciones especificadas (array de filtros)
+● $not. Invierte las condición especificada (filtros)
+● $nor. NOT OR ((!expr1)AND!(!expr2)) (array de filtros)
+● $or. Que cumpla algunas de las condiciones especificadas (array de
+filtros)
+Elementos
+● $exists. Que contiene el campo o no (true/false)
+● $type. Filtra por el tipo
+Evaluacion
+● $expr. Permite el uso de expresiones de agregación dentro de la query.
+● $mod. Realiza una operación de módulo en el valor de un campo y
+selecciona documentos con un resultado específico.
+● $regex. Permite expresiones regulares.
+● $text. Búsquedas de texto.
+● $jsonSchema. Búsquedas de texto.
+
+*/
+
+/* Fin con los finds avanzados*/
+
