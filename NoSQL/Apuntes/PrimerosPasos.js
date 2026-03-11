@@ -151,6 +151,51 @@ selecciona documentos con un resultado específico.
 ● $jsonSchema. Búsquedas de texto.
 
 */
+var query5 = {"edad": {$gte: 20}}
+var query7 =  {"edad": {$eq:25}}
+var query6 = {"edad": {$lte: 22}}
+var logic = {$and: [query5,query6]} //Con esto decimos aquellos que cumplan ambas condiciones
+var logic2 = {$nor: [query6,query7]}//Con esto decimos aquellos que no cumplan ninguna de las dos condicones
+db.Master_Prueba_Carga.find(logic2)
 
+var query = {"edad": {$exists: true}}
+db.Master_Prueba_Carga.find(query)
+
+var query = {"noexiste": {$exists: false}}
+var operacion = {$set: {"siexiste": null}}
+//como si existe el campo, no me crea el otro campo. Si no existiese dicho campo, me lo crearía
+db.Master_Prueba_Carga.updateOne(query, operacion)
+db.Master_Prueba_Carga.find()
+
+//para buscar por tipo de campo (string, double, null):
+
+var query = {"noexiste": {$type: "null"}}
+db.Master_Prueba_Carga.find(query)
 /* Fin con los finds avanzados*/
+
+/* Documentos embebidos comeinzo*/
+
+var array_personas = [
+    {"nombre":"jerry4", "email":"trest@test.com", "edad_telefono": {"edad": 22, "phone": "7837129879"}, "phone": "7837129879",  "campo": null  },
+    {"nombre":"jerry5", "email":"trest5@test.com", "edad_telefono": {"edad": 25, "phone": "7835129879"}, "phone": "7837129879", "campo": null  },
+    {"nombre":"jerry6", "email":"trest6@test.com", "edad_telefono": {"edad": 26, "phone": "7836129879"}, "phone": "7837129879", "campo": null  },
+    {"nombre":"jerry7", "email":"trest7@test.com", "edad_telefono": {"edad": 27, "phone": "7837829879"}, "phone": "7837129879", "campo": null  }
+    ]
+    
+db.Master_Prueba_Carga.insertMany(array_personas)
+//para buscar estos campos especiales, se hace con el punto (como llamando a un atributo de un objeto en progra)
+//ejemplo:
+var query = {"edad_telefono.edad": {$gte: 26}}
+
+db.Master_Prueba_Carga.find(query)
+db.Master_Prueba_Carga.find()
+
+/* Inicio probando arrays*/
+
+var query_orden = {"nombre" : ["jerry5", "jerry6"]}
+db.Master_Prueba_Carga.find(query_orden)
+
+/* Fin probando arrays*/
+
+/* Fin de los documentops embebidos*/
 
