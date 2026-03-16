@@ -1,0 +1,101 @@
+/*---------------------------------------------------------------------------------------
+Nombre del autor: Gerardo Fructuoso Vidal-Aragón
+Nombre de la base de datos: ArteVidaCultural
+-----------------------------------------------------------------------------------------*/
+/* ------------------------------------------------------------------------------------------------
+Definición de la estructura de la base de datos
+--------------------------------------------------------------------------------------------------*/
+/* ------------------ INICIO CREACIÓN BASE DE DATOS -------------------------------------*/
+DROP DATABASE IF EXISTS ArteVidaCultural; 
+CREATE DATABASE ArteVidaCultural; 
+USE ArteVidaCultural; 
+/* ------------------ FIN CREACIÓN BASE DE DATOS ----------------------------------------*/
+/*------------------- INICIO CREACIÓN DE TABLAS -----------------------------------------*/
+CREATE TABLE ACTIVIDAD(
+ACTI_CODIGO INT AUTO_INCREMENT NOT NULL, -- LE PONEMOS QUE SE VAYA INCREMENTANDO SOLO TODOS LOS IDS DE LAS TABLAS 
+ACTI_COSTE DOUBLE NOT NULL,
+ACTI_TIPO VARCHAR (50), 
+ACTI_NOMBRE VARCHAR (100) NOT NULL,
+PRIMARY KEY(ACTI_CODIGO)
+);
+
+CREATE TABLE UBICACIONES(
+UBIC_CODIGO INT AUTO_INCREMENT NOT NULL,
+UBIC_NOMBRE VARCHAR(50) NOT NULL,
+UBIC_DIRE VARCHAR(50) NOT NULL UNIQUE,
+UBIC_CIUDAD_PUEBLO VARCHAR (50), 
+UBIC_AFORO INT NOT NULL,
+UBIC_PRECIO DOUBLE NOT NULL,
+UBIC_CARASTERÍSTICAS VARCHAR(200),
+PRIMARY KEY(UBIC_CODIGO)
+);
+
+CREATE TABLE EVENTO( 
+EVEN_CODIGO INT AUTO_INCREMENT NOT NULL, 
+EVEN_DESCRIPCION VARCHAR(50), 
+EVEN_NOMBRE VARCHAR(50) NOT NULL, 
+EVEN_PRECIO_ENTR DOUBLE NOT NULL, 
+EVEN_FECHA DATE NOT NULL,
+EVEN_HORA TIME NOT NULL, 
+EVEN_ACTI_CODIGO INT, 
+EVEN_UBIC_CODIGO INT, 
+PRIMARY KEY(EVEN_CODIGO), 
+FOREIGN KEY(EVEN_ACTI_CODIGO) REFERENCES ACTIVIDAD(ACTI_CODIGO), 
+FOREIGN KEY(EVEN_UBIC_CODIGO) REFERENCES UBICACIONES(UBIC_CODIGO) 
+);
+
+CREATE TABLE ASISTENTES(
+ASIS_CODIGO INT AUTO_INCREMENT NOT NULL,
+ASIS_NOMBRE VARCHAR(50) NOT NULL,
+ASIS_APELLIDO VARCHAR(50) NOT NULL,
+PRIMARY KEY (ASIS_CODIGO)
+);
+
+CREATE TABLE ASIS_TELEFONO(
+ASIS_CODIGO INT NOT NULL,
+ASIS_PREFIJO VARCHAR(4) NOT NULL,
+ASIS_TELEFONO VARCHAR(15) NOT NULL,
+PRIMARY KEY(ASIS_CODIGO, ASIS_PREFIJO, ASIS_TELEFONO),
+FOREIGN KEY (ASIS_CODIGO) REFERENCES ASISTENTES(ASIS_CODIGO)
+);
+
+CREATE TABLE ASIS_EMAIL(
+ASIS_CODIGO INT NOT NULL,
+ASIS_EMAIL VARCHAR(320) NOT NULL,
+PRIMARY KEY(ASIS_CODIGO, ASIS_EMAIL),
+FOREIGN KEY (ASIS_CODIGO) REFERENCES ASISTENTES(ASIS_CODIGO)
+);
+
+CREATE TABLE ARTISTA(
+ARTI_CODIGO INT AUTO_INCREMENT NOT NULL,
+ARTI_BIOGRAFIA VARCHAR(255),
+ARTI_NOMBRE VARCHAR(50) NOT NULL,
+PRIMARY KEY(ARTI_CODIGO)
+);
+
+CREATE TABLE PARTICIPAN(
+PART_ACTI_CODIGO INT NOT NULL,
+PART_ARTI_CODIGO INT NOT NULL,
+LA_CACHE DOUBLE NOT NULL,
+PRIMARY KEY(PART_ACTI_CODIGO, PART_ARTI_CODIGO),
+FOREIGN KEY(PART_ACTI_CODIGO) REFERENCES ACTIVIDAD(ACTI_CODIGO),
+FOREIGN KEY(PART_ARTI_CODIGO) REFERENCES ARTISTA(ARTI_CODIGO)
+);
+
+CREATE TABLE ASISTENCIA(
+ASIS_EVEN_CODIGO INT NOT NULL,
+ASIS_ASIS_CODIGO INT NOT NULL,
+PRIMARY KEY(ASIS_EVEN_CODIGO,ASIS_ASIS_CODIGO),
+FOREIGN KEY(ASIS_EVEN_CODIGO) REFERENCES EVENTO(EVEN_CODIGO),
+FOREIGN KEY(ASIS_ASIS_CODIGO) REFERENCES ASISTENTES(ASIS_CODIGO)
+);
+/* ------------------- FIN CREACIÓN DE TABLAS ---------------------------------*/
+
+/*------------------------------------------------------------------------------------------------------
+Trigger
+Inserción de datos
+-------------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------------------------
+Consultas, modificaciones, borrados y vistas con enunciado
+-------------------------------------------------------------------------------------------------------*/
