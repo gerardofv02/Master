@@ -1,0 +1,11 @@
+EVEN_CODIGO,EVEN_DESCRIPCION,EVEN_NOMBRE,EVEN_PRECIO_ENTR,EVEN_FECHA,EVEN_HORA,EVEN_ACTI_CODIGO,EVEN_UBIC_CODIGO
+1,Concierto I clásico,Primer concierto clásico,10,2026-03-16,10:00:00,1,1
+2,Opera I,Primera Opera,10,2026-03-17,10:00:00,2,2
+3,Opera II,Segunda Opera,10,2026-03-16,10:00:00,3,3
+4,Concierto II clásico,Segundo concierto clásico,20,2026-03-17,10:00:00,4,4
+5,Festival Difraces I,Primer Festival,10,2026-03-18,10:00:00,5,1
+6,Festival Difraces II,Segundo Festival,5,2026-03-19,10:00:00,6,2
+7,Concierto III clásico,Tercer concierto clásico,10,2026-03-20,10:00:00,7,3
+8,Festival Difraces III,Tercer Festival,20,2026-03-21,10:00:00,8,4
+9,Opera III,Tercera Opera,30,2026-03-22,10:00:00,2,1
+10,Concierto IV clásico,Cuarto concierto clásico,3,2026-03-23,10:00:00,2,2
