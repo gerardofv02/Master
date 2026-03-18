@@ -228,7 +228,7 @@ SELECT DISTINCT(ACTI_TIPO) AS TIPO_DE_ACTIVIDAD FROM ACTIVIDAD;
 SELECT UBIC_NOMBRE AS DISTINTAS_UBICACIONES, UBIC_DIRE AS DISTINTAS_DIRECCIONES, UBIC_CIUDAD_PUEBLO AS DISTINTAS_CIUDADES
 FROM UBICACIONES;
 
--- Por ejemplo ahora vamos a ver los precios de las entradas de los eventos ordenados de mayor a menor (con su nombre)
+-- Por ejemplo ahora vamos a ver los precios de las entradas de los eventos ordenados de menor a mayor (con su nombre)
 SELECT EVEN_PRECIO_ENTR AS PRECIO_EVENTO, EVEN_NOMBRE AS NOMBRE_EVENTO FROM EVENTO
 ORDER BY EVEN_PRECIO_ENTR ASC;
 
@@ -242,7 +242,7 @@ INNER JOIN PARTICIPAN
 ON ARTI_CODIGO = PART_ARTI_CODIGO
 INNER JOIN ACTIVIDAD
 ON ACTI_CODIGO = PART_ACTI_CODIGO
-WHERE LA_CACHE > 10;
+WHERE LA_CACHE > 15;
 
 -- Por ejemplo vamos a ver la cantidad generada de dinero con las entradas. (Evento, asistencia)
 SELECT EVEN_NOMBRE AS NOMBRE_EVENTO, EVEN_PRECIO_ENTR * COALESCE(COUNT(DISTINCT(ASIS_ASIS_CODIGO)), 0) AS GANANCIAS
@@ -322,7 +322,7 @@ LEFT JOIN ASIS_EMAIL B
 ON A.ASIS_CODIGO = B.ASIS_CODIGO
 GROUP BY A.ASIS_NOMBRE;
 
--- Por ejemplo obejetenmos los eventos que haya el 18 de marzo del 2026 Y SUS HORAS
+-- Por ejemplo obejetenmos los eventos que haya el 16 de marzo del 2026 Y SUS HORAS
 
 SELECT EVEN_NOMBRE AS NOMBRE_EVENTO, EVEN_HORA AS HORA_EVENTO
 FROM EVENTO
