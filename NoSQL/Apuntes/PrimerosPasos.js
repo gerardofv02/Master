@@ -191,11 +191,142 @@ db.Master_Prueba_Carga.find(query)
 db.Master_Prueba_Carga.find()
 
 /* Inicio probando arrays*/
+var array_personas2 = [
+    {"nombre":"jerry8", "email":"trest@test.com", "edad_telefono": {"edad": 22, "phone": "78371295879"}, "phone": "7837729879",  "campo": null, "color_fav": ['red','green']  },
+    {"nombre":"jerry9", "email":"trest5@test.com", "edad_telefono": {"edad": 25, "phone": "78351294879"}, "phone": "78374129879", "campo": null,"color_fav": ['green','red']  },
+    {"nombre":"jerry10", "email":"trest6@test.com", "edad_telefono": {"edad": 26, "phone": "783612934879"}, "phone": "78374129879", "campo": null,"color_fav": ['blue','green']  },
+    {"nombre":"jerry11", "email":"trest7@test.com", "edad_telefono": {"edad": 27, "phone": "78378298759"}, "phone": "78371529879", "campo": null,  "color_fav": ['orange','pink']}
+    ]
+    
+var persona3 = {"nombre":"jerry9", "email":"trest@test.com", "edad_telefono": {"edad": 22, "phone": "783471295879"}, "phone": "78374729879",  "campo": null, "color_fav": ['red','green','orange']  }
+db.Master_Prueba_Carga.insertOne(persona3)
+db.Master_Prueba_Carga.insertMany(array_personas2)
 
-var query_orden = {"nombre" : ["jerry5", "jerry6"]}
-db.Master_Prueba_Carga.find(query_orden)
+var query_array = {color_fav: ['red','green']} // Se tiene que poner exactamente los valores y en el orden correcto
+
+var query_array2 = {color_fav: {$all:['red','green']}} //obtiene todas las que tengan estos dos tags independientemente del orden o si tienen más elementos el array
+
+var query_array3 = {color_fav: 'red'} // opbitne todos los registros en el cual tenga como valor en color favortio red pero en cualquier posicion del array
+
+//se usal $elemMatch para que ambas condiciones que se den tengan que cumplirse
+
+var query_array4 = {"color_fav.1" : 'red'} //sirve para obtener aquellos registros donde la posición del array del campo color fav, el elemento 1 sea rojo >(se comineza desde 0 siempre)
+
+var query_array5 = {color_fav: {$in: ['red','pink']}} //obtiene todos los registros en los cualqes el array contenga 'red' o pink (uno u otro)
+
+var query_array6 = {color_fav: {$nin: ['red','pink']}} //obtiene todos los registros en los cualqes el array no contenga 'red' ni pink (ni uno ni otro)
+
+var query_array7 = {color_fav :{$size:3}} //devuelve aquellos registros donde el tamaño del array del campo valga 3 en este caso
+
+db.Master_Prueba_Carga.find(query_array7)
+
+/* Ahora vamos con los arrays de obtetos o documentos embebidos */
+
+var array_personas2 = [
+    {"nombre":"jerry8", "email":"trest@test.com", "edad_telefono": {"edad": 22, "phone": "78371295879"}, "phone": "7837729879",  "campo": null, "color_fav": [{"color": 'red', "poscion": 2},{"color": 'green', "posicion":1}]  },
+    {"nombre":"jerry9", "email":"trest5@test.com", "edad_telefono": {"edad": 25, "phone": "78351294879"}, "phone": "78374129879", "campo": null,"color_fav": [{"color": 'green', "poscion": 2},{"color": 'red', "posicion":1}]  },
+    {"nombre":"jerry10", "email":"trest6@test.com", "edad_telefono": {"edad": 26, "phone": "783612934879"}, "phone": "78374129879", "campo": null,"color_fav": [{"color": 'blue', "poscion": 2},{"color": 'green', "posicion":1}] },
+    {"nombre":"jerry11", "email":"trest7@test.com", "edad_telefono": {"edad": 27, "phone": "78378298759"}, "phone": "78371529879", "campo": null,  "color_fav": [{"color": 'orange', "poscion": 2},{"color": 'pink', "posicion":1}]}
+    ]
+    
+var persona3 = {"nombre":"jerry9", "email":"trest@test.com", "edad_telefono": {"edad": 22, "phone": "783471295879"}, "phone": "78374729879",  "campo": null, "color_fav": [{"color": 'red', "poscion": 2},{"color": 'green', "posicion":1}, {"color": 'orange', "posicion": 3}] }
+db.Master_Prueba_Carga.insertOne(persona3)
+db.Master_Prueba_Carga.insertMany(array_personas2)
+
+var query_array = {'color_fav.color':'red'} //me buscar cualquier registro donde dentro del array de objetos el atributo collor valga red (cualquiera)
+
+var query_array1 = {'color_fav.0.color': 'red'} //me busca caulquier registro dopnde dentro del array de objetos el atribito color del PRIMER obtjeto del array sea 'red'
+
+db.Master_Prueba_Carga.find(query_array)
+
+/*
+Elementos imporantes de los arrays con el find:
+Filtros
+$all. Encuentra arrays que contienen todos los
+elementos especificados en la consulta
+$elemMatch. Selecciona documentos si el
+elemento en el campo del array coincide con
+todas las condiciones especificadas de
+$elemMatch
+$size. Selecciona si tiene el tamaño especificado
+Proyecciones
+$. Selecciona el primer elemento del array
+$elemMatch. Muestra los campos si cumple
+criterios
+$slice. Controla el número de elementos de un
+array que devuelve una consulta
+Modificadores
+$each . Para añadir varios items
+$position. Especifica la posición en el array
+$slice. Limita el tamaño del array
+$sort. Reordena el array
+Update
+$. Actúa como un marcador de posición para
+actualizar el primer elemento que coincide con
+la condición de consulta
+$[]. Actúa como un marcador de posición para
+actualizar todos los elementos que coinciden
+con la condición de consulta
+$[<identifier>]. Actúa como un marcador de
+posición para actualizar todos los elementos que
+coinciden con la condición de consulta de
+ArrayFilters.
+$addToSet. Agrega elementos a un array sólo si
+aún no existen en el conjunto.
+$pop. Elimina el primer o último elemento de un
+array
+$pull. Elimina todos los elementos de un array
+especificada en una query
+$push. Añade un item al array
+$pullAll. Elimina todos los elementos de un
+arrayx
+find() devuelve un cursor de documentos que se puede iterar. Las funciones principales son:
+● close. Cierra el cursor.
+● count. Cuenta número de documentos del cursor original (sin iterar)
+● forEach. Aplicar una función a todos los documentos del cursor
+● hasNext. Devuelve true o false si quedan documentos que iterar.
+● skip. Salta número de documentos.
+● limit. Limita número de documentos del cursor.
+● next. Itera el siguiente documento.
+● pretty. Mostrar JSON más visual.
+● size. Cuenta número documentos después de realizar limit y/o skip.
+● sort. Ordena la salida.
+● toArray. Itera cursor y lo asigna a un array.
+
+
+
+*/
 
 /* Fin probando arrays*/
 
-/* Fin de los documentops embebidos*/
+/* Vamos con los cursores */
+// Ordenamos de forma ascencente:
+db.Master_Prueba_Carga.find().sort({phone: 1})
+
+// Ordenamos de forma descendente
+db.Master_Prueba_Carga.find().sort({phone: -1})
+
+// Limit para limitar la cantidad de registros que aparezcan:
+
+db.Master_Prueba_Carga.find().limit(2) //solo dos registros
+
+// Skip para saltar x registros
+db.Master_Prueba_Carga.find().sort({phone: 1}).limit(2).skip(3) // salta 3 registros
+
+//Count para saber la cantidad de registros que hay
+db.Master_Prueba_Carga.find().count()
+
+// hasNext para saber si hay algun registro despues o no
+db.Master_Prueba_Carga.find().skip(1).hasNext()//devuelve true porq hay mas de 1 registro
+
+db.Master_Prueba_Carga.find().skip(db.Master_Prueba_Carga.find().count()).hasNext()//devuelve false porq no hay mas registros despues del ultimo
+
+// next sirve para devolver el siquiente curosr
+db.Master_Prueba_Carga.find().skip(1).next() 
+
+//pretty para mostrar el json mas visual (como el pretty json de visual studio code)
+//Size: igual que el count pero para contar los elementos una vez hecho el skip
+db.Master_Prueba_Carga.find().skip(5).size()    
+
+//toArray para convertirlo en un array
 
