@@ -330,3 +330,24 @@ db.Master_Prueba_Carga.find().skip(5).size()
 
 //toArray para convertirlo en un array
 
+//probando pull
+
+
+var query_red = {"color_fav": {$all: ['red']}}
+db.Master_Prueba_Carga.find(query_red).count()
+
+var query_red = {"color_fav": {$all: ['red']}}
+db.Master_Prueba_Carga.updateMany(query_red,{$pull: {'color_fav': 'red'}})
+
+// probando arrays vacios
+var query_size_0 = {"color_fav": {$size: 0}}
+db.Master_Prueba_Carga.find(query_size_0)
+
+//probando push
+var query_size_0 = {"color_fav": {$size: 0}}
+db.Master_Prueba_Carga.updateMany(query_size_0,{$push: {'color_fav': 'red'}})
+
+//probando el para devolver el valor maximo de la edad
+var query_edad_reciente = {}
+var projection_edad = {"edad":1, "_id": 0}
+db.Master_Prueba_Carga.find(query_edad_reciente,projection_edad).sort({'edad': -1}).limit(1)
