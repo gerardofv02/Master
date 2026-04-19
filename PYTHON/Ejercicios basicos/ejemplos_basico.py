@@ -140,5 +140,26 @@ def ejercicio5():
         print ("This equation has two solutions: ", x1, " and", x2)
                
             
+def ejercicio6():
+    input('Para este truco vas a necesitar un dado...')
+    input('Lanza el dado  y díjate en el resultado')
+    input('Multiplícalo por 2 y suma 5 al resultado...')
+    #dado = dado*2 + 5
+    input('Multiplica ahora lo que tienes por 5....')
+    #dado = dado*5
+    input('Y ahora lanza el dado de nuevo....')
+    input('y añade la puntuacion obtenida al resultado anterior....')
+    # dado = dado + dado2
+    resultado = int(input('Dime el resultado obtenido: '))
+
+    print('Ahora adivinaré los resultados obtenidos....')
+    input('Dejame pensar...')
+    resultado = resultado - 25
+    resultado_string = str(resultado)
+    print('Primer numero: ', int(resultado_string[0]), ' \nSegundo número: ', int(resultado_string[1]))
+
+import math
+def raiz(a,b):
+    return a ** (1/b)
 if __name__ == "__main__":
-    ejercicio5()
+    print(raiz(125,3))
