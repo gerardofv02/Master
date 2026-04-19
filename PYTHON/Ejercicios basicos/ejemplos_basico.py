@@ -1,4 +1,6 @@
 
+
+
 def ejercicio1():
     """
     Documentaciones utilizadas en este código:
@@ -99,9 +101,9 @@ def ejercicio4():
 
     import math
 
-    a = int(input("Pon el coficiente a: "))
-    b = int(input("Pon el coficiente b: "))
-    c = int(input("Pon el coficiente c: "))
+    a = float(input("Pon el coficiente a: "))
+    b = float(input("Pon el coficiente b: "))
+    c = float(input("Pon el coficiente c: "))
 
     d = b**2-4*a*c # discriminant
 
@@ -113,8 +115,30 @@ def ejercicio4():
     else:
         x1 = (-b+math.sqrt(b**2-4*a*c))/ (2*a)
         x2 = (-b-math.sqrt(b**2-4*a*c))/ (2*a)
-        print ("This equation has two solutions: ", x1, " and", x2
-)
-if __name__ == "__main__":
-    ejercicio4()
+        print ("This equation has two solutions: ", x1, " and", x2)
 
+
+def ejercicio5():
+    from cmath import sqrt
+
+    a = complex(input("Pon el coficiente a: "))
+    b = complex(input("Pon el coficiente b: "))
+    c = complex(input("Pon el coficiente c: "))
+
+    d = complex(b**2-4*a*c)
+
+    if d.real < 0:
+        x1 =complex((-b+sqrt(b**2-4*a*c))/ (2*a))
+        x2 = complex((-b-sqrt(b**2-4*a*c))/ (2*a))
+        print ("This equation has two solutions: ", x1, " and", x2)
+    elif d.real == 0:
+        x = (-b+sqrt(d))/ (2*a)
+        print ("This equation has one solutions: ", x)
+    else:
+        x1 = (-b+sqrt(b**2-4*a*c))/ (2*a)
+        x2 = (-b-sqrt(b**2-4*a*c))/ (2*a)
+        print ("This equation has two solutions: ", x1, " and", x2)
+               
+            
+if __name__ == "__main__":
+    ejercicio5()
