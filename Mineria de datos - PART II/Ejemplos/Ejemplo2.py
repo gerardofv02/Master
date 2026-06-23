@@ -131,3 +131,56 @@ print(table_str)
 
 print(model1.level)
 print(model1.trend)
+
+## TEMA 2 -> PARA MODELIZACIÓN ARIMA
+# ahora en este ejemplo vamos a calcular las autocorrelaciones
+## para importanralas:
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+
+
+figure,(ax1,ax2) = plt.subplots(2,1,figsize=(12,8))
+plot_acf(train, lags=30, ax=ax1) ## aqui calculamos las simples
+ax1.set_title('Funcion autocorrelacion ACF de defunciones')
+
+plot_pacf(train,lags=30,ax=ax2) ## aqui calculamos las parciales
+ax2.set_title('Funcion autocorrelacion PACF de defunciones')
+plt.tight_layout()
+plt.show()
+
+
+## aqui se puede ver que la autocrrelacion simple se ve que tiene comportamiento periodico ya que se puede ver
+## que se repite el patrón mientras que en el parcial
+## vemos que tenemos en el retardo 12 que es muy importante ya que para retardos periodicos, los valores influyen mucho
+## como estamos viendo los viajeros en un año (12 meses) al ser 12 meses el retardo que encontramos en la posción 12
+## es muy grande
+
+## TEMA 2: Procesos integrados
+## vemos ahora el modelo arima con datos estacionarios
+
+## realizamos la diferencia estacional ya que tenemos muchas diferencias entre los meses de enero y meses de mayo
+
+diferencias = train.diff(12)# calculamos las diferencias
+
+# grafica
+plt.figure(figsize=(12,6))
+plt.plot(diferencias)
+plt.show()
+
+## vemos que la media cambia mucho solo hay un poco distinto en los valores de la pandemia como es nomral
+## pero se puede obsrevar q es una media muy cosntante
+
+## ahora representamos los valores de autocorrelacion simple yu la parcial ¡
+diferencias = diferencias.dropna()
+figure1,(ax11,ax22) = plt.subplots(2,1,figsize=(12,8))
+plot_acf(diferencias, lags=30, ax=ax11) ## aqui calculamos las simples
+ax11.set_title('Funcion autocorrelacion ACF de defunciones (diferenciada)')
+
+plot_pacf(diferencias,lags=30,ax=ax22) ## aqui calculamos las parciales
+ax22.set_title('Funcion autocorrelacion PACF de defunciones(diferenciada)')
+plt.tight_layout()
+plt.show()
+
+## ya nos tenemos curvas tan grandes debido a que hemos eliminado la estacionalidad tan fuerte
+## decrece de forma rapida pero mejor, y tenemos la 1 y la 12 muy fuertes
+## entonces visto esto el modelo que ajustariamos seria difrernciacion estacional (no regular) y el primer 1 viene para modelizar
+## los valores posteriors del 1 y el segundo 1 viene del 12 para modelizar las siguientes
