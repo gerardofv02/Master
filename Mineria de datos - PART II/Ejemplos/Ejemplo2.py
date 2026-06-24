@@ -184,3 +184,9 @@ plt.show()
 ## decrece de forma rapida pero mejor, y tenemos la 1 y la 12 muy fuertes
 ## entonces visto esto el modelo que ajustariamos seria difrernciacion estacional (no regular) y el primer 1 viene para modelizar
 ## los valores posteriors del 1 y el segundo 1 viene del 12 para modelizar las siguientes
+
+## tema 2 video 4 modelo autoregresivo
+# generaliza la idea de regresion para re0presentar  la relacion entre una variable de la serie y las anteriores.
+
+## tema 2 video 5 modelo arima estacional
+# generaliza la idea de regresion para re0presentar  la relacion entre una variable de la serie y las anteriores.
