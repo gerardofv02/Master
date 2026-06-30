@@ -25,7 +25,7 @@ data['Fecha'] = pd.to_datetime(data['Fecha'], format='%Y-%m')
 # creamos ahora los dos series y el df
 V_ESP =  data.set_index('Fecha')['R_España']
 V_EXT = data.set_index('Fecha')['R_Extranjero']
-s_cordoba = data.set_index('Fecha')[['R_España','R_Extranjero' ]]
+s_cordoba = data.set_index('Fecha')[['R_España','R_Extranjero']]
 
 # s_cordoba.plot()
 # plt.show()
@@ -290,7 +290,7 @@ print(resultados.summary())
 # REQUISITTOS: INCORRELADOS Y DE PEQUEÑO TAMAÑO
 
 ##para calcular los residuos del modelo:
-resultados.plot_diganostics(figsize=(12,8))
+resultados.plot_diagnostics(figsize=(12,8))
 plt.show()
 
 # viendo la grafica de abajo derecha:
@@ -319,3 +319,61 @@ plt.show()
 
 # PRimer termino de la definicion del AIC es el que realmente mide el desajuste, su valor aumenta cuando peor es el ajuste
 # El AIC sigue siendo principiop de parsimonia por lo que hay q coger el modelo con menor AIC (pero este valor aumenta si el numero de parametros k aument tmb)
+
+
+## TEMA 2 EP 9: PREDICCION
+# SERIE DE TIPO PERIDICOS -> SE SUELE PREDECIR UN POCO MAS
+# para la cantidad de predicciones se indica de la siguiente forma:
+prediciones = resultados.get_forecast(steps=12) # aqui en resutlados estan los datos del modelo #calculamos un año siguietne al ultimo mes
+predi_test = prediciones.predicted_mean 
+print(predi_test)
+## aqui nos salen los valores de las predicciones que nos salen desde agosto hasta julio
+# vamos a verlo graficamente:
+plt.plot(train,label='Train', color = 'gray')
+plt.plot(test,label='TEST', color= 'yellow')
+plt.plot(prediciones.predicted_mean, label='Predicciones',color='blue')
+plt.xlabel('fecha')
+plt.ylabel('viajeros')
+plt.title('MODELO ARIMA')
+plt.legend()
+plt.show()
+## se ve que se ajusta muy bien pero para verlo mejor vamos a ahcer un grafico solo de la parte test:
+intervalos_confianza = prediciones.conf_int() ### aqui obtenermos los intervalos de confianza son interesantes ya que nos dicen
+#con un probabvilidad del 95% que los valores estan entre ellos
+
+plt.figure(figsize=(12,8))
+plt.plot(intervalos_confianza['lower R_España'],label='UCL',color ='gray')
+plt.plot(intervalos_confianza['upper R_España'],label='UCL',color ='gray')
+plt.plot(prediciones.predicted_mean, label='Predicciones',color='blue') #datos de prediccion
+plt.plot(test,label='TEST', color= 'yellow') # datos reales
+plt.xlabel('fecha')
+plt.ylabel('viajeros')
+plt.title('MODELO ARIMA')
+plt.legend()
+plt.show()
+
+
+## TEMA 2 VIDEO 10: AUTOARIMA
+# PODEMOS CREAR UN MODELO ARIMA AJUSTANDOLO DE FORMA AUTOMATICA CON UNA FUNCION DE LA LIBREIRA PMDARIMA
+import pmdarima as pm
+
+
+## PÒR ULTIMO EN EL ULTIMO VIDEO PARA VER TRANSFORMACIONES PARA ESTABILIZAR LA VARIANZA SE PUEDEN USAR LOS LOGARTIMOS:
+
+log_serie = np.log(V_EXT.dropna()) # eliminamos los valores missiong para q no hyaa probslemas
+
+# vemos subgraficos
+
+fig3,(ax13,ax23) = plt.subplots(2,1,figsize=(12,8))
+ax13.plot(V_EXT,color='blue')
+ax13.set_title('original')
+ax23.plot(log_serie,color='red')
+ax23.set_title('log')
+plt.tight_layout()
+plt.show()
+
+## apra ver si hay cambios es muy dificil, si fuese onstante la amplitud deberia ser mas o menos igual en lka amplitud en el eje y de la grafica
+# en la zona de la rderecha hay menos cambio con lo q hay menos variabilidad y ahora toda la serie esta en un intervalo casi autentico
+
+##IMPORTANTE: ESTO NO SE DEBE APLICAR A NO SER QUE SEA ESTRICATEMNTE NECESARIO CON LO Q SOLO SE DEBE APLICAR CUANDO NO CONSIGAMOS NINGUN MODELO ARIMA CON RESIDUALES INCORRELADOS
+
