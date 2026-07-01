@@ -40,11 +40,11 @@ additive_descompose = seasonal_decompose(V_ESP, model='additive',period=12)
 # en este atributo nos hemos guardado mucha informacion
 # print(additive_descompose)
 # representamos graficamente
-# plt.rc('figure', figsize=(16,12))
-# plt.rc('font',size = 13)
-# fig = additive_descompose.plot()
+plt.rc('figure', figsize=(16,12))
+plt.rc('font',size = 13)
+fig = additive_descompose.plot()
 
-# plt.show()
+plt.show()
 
 # si dela tributo creoado antes nos queremos obtener los coeficientes de estacionalidad, se hace de la siguiente manera
 print(additive_descompose.seasonal[:12]) ## son 12 los meses en un año y vemos llos primeros q trenemos
