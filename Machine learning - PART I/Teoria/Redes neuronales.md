@@ -150,3 +150,55 @@ Para evaluar un modelo de red neuronal nuestra metrica final sera la matriz de c
 4. Interpretacion de los pesos obtenidos (calculo del descenso del gradiente para ver como hay que modificar los pesos)
 
 ## Ideas sobre arquitecturas
+En este punto se ve como montar las arquitecturas.
+Todas las variables tienen que ser cuantitativas. SI hay variables cualitativas, habrá que ponerlas a dummy o pasarlas a cuantitativas. Una vez las tengamos se tienne que estandarizar estas variables para que todas tengan el mismo peso.
+
+Para estandarizar podemos aplicar la normalización o haciendo un cambio de escala.
+
+Cantidad de capas ocultas: Con una capa oculta podemos resolver problemas de clasificacion binaria o de regresión. Para temas de clasificación imganes y otro tipos de cosas mas complejas se tendrán que tener mas capas ocultas.
+
+Numeros de nodos: La cantidad minima de nodos aumenta teniendo en cuenta distintos temas como numero de varibales input, numero de variables output, funcion de activacion, complejidad del problema,...
+
+Algunas recomendaiones para fijar numero de nodos segun los datos:
+
+- 10,20 observaciones por parámetro
+- Para regreseión, entre 5 y 25 obervaciones por parámetro, para clasificacion entre 5 -25 observaciones en la categoría más pequeña, por parámetro
+- Tantos nodos como dimensiones en componentes princpiales suficientes para capturar un 70-90% de la varianza de los inputs
+- numero de nodos inferior a 1/30 de los datos de entrenamiento
+- Para ajustar 20 nodos es necesario habitualmente tener entre 150 y 2500 observaciones (bishop)
+
+
+Otros conceptos a tener en cuenta:
+- Experimentación: SE recomienda comenzar con un numero pequeño de nodos y aumentarlo gradualmente evaluando el rendimiento de la red.
+- Técnicas de regularizaciñon: En lugar de fijar un número de nodos de antemano, se pueden aplicar técnicas de regularización para penalizar los pesos de la red.
+- Arquitecturas predefinidas: Algunas bibliotecas o marcos de deep learning tienen arquitecturas predefinicidas según el tipo de problema y complejidad, pero sería mejor evitarlo.
+
+
+## REdes neurnales: Clasificacion y regresion
+
+EN general el funcionamineto general de la clasificacion de las redes se define una funcion objetivo para seleccionar los parámetros que la optimicen:
+
+- REgresión logistica: Máxima verosimilitud del modelo suponiendo la función logit; logit generalizada; logit acumulativa o bien probit.
+- REd neuronal: máxima verosimilitud  suponiendo la funcion binomial por defecto o bien funcion de coste
+
+El algortimo optimiza los parámetros para que la predicción se ajustea esta distribucion que se obtendrá en forma de score. SE tiene que determinar un umbral para que lo ponga en cada una de las clases correspondiente
+
+Por ejemplo poniendo punto de corte en 0.5, en clasificacion binaria por encima seria 1 mientras q por debajo seria 0. ESto se tiene que modificar según la complejidad y lo que se quiere.
+
+UNa vez tenemos etiquetas, podemos calcular medidas de eficacia como puede ser la matriz de confusión
+
+### Planteamiento red neurnal para variable dependiente binaria
+
+Cuando la variable dependiente es categórica con k categorías, la red se plantea simplemente poniendo k-1 nodos output. ESto lo ahce el paquete-programa autoomaticamente, no es necesario crear dummies en la vairable output.
+
+SI la variable output es binaria, normalemnte daremos valor 1 a la categoría de interés (suele ser la menos  numerosa) y automaticamente la red modeliza la probabilidad de y=1
+
+La red plantea técnicamente añadiendo una funcion de activación de la capa oculta al nodo outpur. Para que el valor resultante tome valores en el intervalo especificado (0,1). Necesitamos esta funcion de activación para converitr el resultado de la red neurnal entre 0-1. ESto no es necesario si la vairbale output es continua.
+
+### REd neurnal para regresión.
+
+Proceso de optimización-estimación de los pesos. SE observa como va descendiendo el valor de la función objetivo a medida que los pesos se estiman mejor según avanzan las iteraciones. Cuando el output es una variable continua, la funcion de error habitual a minimizar es el mean squared error.
+
+El coeficiente de determinaciónmpuede ser negativa, esto indica que el valor evaluado es aun peor que un simple modelo que solo predice la media de la vairable dependiente. ESto significa que el modelo no se ajusta bien a los datos y que su capacidad predictiva es práctiamente inexistente o incluso peor que una predicción aleatoria
+
+EN general el R² (coeficiente de determinacion) puede variar entre 0 y 1 donde un valor mas cercano a 1 indica un ajuste muy bueno al modelo mientras que mas cercano a 0 indica que el modelo no explica la variabilidad  de los datos.
