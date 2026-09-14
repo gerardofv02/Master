@@ -186,3 +186,28 @@ clf = SVC(kernel='linear', C=0.1).fit(X, y)
 
 plot_svc_decision_function(clf, plot_support=False)
 plt.show()
+
+###### SOFT COST 
+X, y = make_blobs(n_samples=100, centers=2,
+                  random_state=0, cluster_std=0.8)
+
+fig, ax = plt.subplots(1, 2, figsize=(16, 6))
+fig.subplots_adjust(left=0.0625, right=0.95, wspace=0.1)
+
+for axi, C in zip(ax, [10.0, 0.1]):
+    model = SVC(kernel='linear', C=C).fit(X, y)
+    axi.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap='autumn')
+    plot_svc_decision_function(model, axi)
+    axi.scatter(model.support_vectors_[:, 0],
+                model.support_vectors_[:, 1],
+                s=300, lw=1, facecolors='none');
+    axi.set_title('C = {0:.1f}'.format(C), size=14)
+
+plt.show()
+
+#### como podemos ver en estas graficas, cuando la penalizacion es mas baja el margen es mas alto pero cuando la penalizacion es mas alta el margen es mas bajo. al final cuianto mas pensalización hya (C) mas sobreajuste hay
+
+## ambos modelos tienen un 100% de precisión pero a prior no podemos saber cual es modelo que clasifica mejor con lo q hya q probasr con disitntos datos
+
+
+##vamos con otro tipo de problema -> seguir en SVM segunda parte.py
