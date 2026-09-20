@@ -42,4 +42,38 @@ OJO: A diferencia del bagging/random forest, gradient boosting no calcula un mon
     - es conveniente señalar que los datos train convergenal verdadero valor de la y, asi que no se debe tomar en ningun caso como referencia la performance del gradient boosting sobre adtos train, sino solamente sobre datos test.
 
 ## Algoritmo gradient boosting para clasificacion
-minuto 8:51
+
+1. SE toma como valor inicialpara la probabilidad predichar de 1 en todaslas observaciones el porcentaje 1 de la muestra
+2. REpetir los siguientes pasos para cada iteracion de m:
+    i: Calcular el residuo actual
+    ii: COnstruir un arbol de regresion para predecir los residuos, tomando ri^m como variable dependiente u objetivo, y el conjuntode las variables X input como dependientes
+    iii: Actualizar la prediccion de la funcion logit f para cada observacion
+    iv: actualizar las prediciones de las probabilidades
+
+3. EL proceso se detiene cuando se llega al numero de iteracioines final deseado
+
+
+### Ejemplo de construccion manual
+
+1. EN la primera iteracion (puntos pequeños color rojo en el grafico) se fijanlos valores iniciales de las predcciones de la variable y como su media (35.1), para todas sus observaciones
+2. SE calcula el residuo real (resi1) que para la primera observacion train toma calor -1.1 y para las observaciones test no existe y al no existir la y
+3. SE construye un arbold e regresion, con resi1 como variable objetivo, x como variable input. ESto da una prediccion para resi1(resi1_est) que no es exactamente igual que resi1: en la observacion train n9 resi1 toma el valor -1.1 y su prediccion-2.1; ademáslas observaciones test tienen valor predicho resi1_est, al disponer de la variable predictora x.
+4. SE actualiza la prediccion de y(y1). En la pimera observacion train, de predecir 35.1, se ha reducido la prediccion en la buena direccion a 34.825; en las observaciones test se ha pasado a 34.825 y 34.575. EN el gráficoaparece en color verde la prediccion final de esta primera iteracion
+5. El proceso continua: se calculan los residuos, se predicirian, se actualizaria la y en cada iteracion. SE observa como las observaciones realies train (puntos grandes azules) tienden a clavarperfectamente su prediccionpero las observaciones reales test (puntos grandes naranjas) que son la que importan, tambien se predice bastante bien. La quinta iteracion está representadapor los puntos pequeños rosa.
+
+![alt text](image.png)
+
+
+## Parametros a modificar para gradient boosting
+
+- L aoncstante de regularizacion v (shink). Normalmente entre (0.00001 y 0.2). Cuanto mas alta, mas rapido converge, pero demasiado alta es poco preciso.- SI se pone muy baja (la recomendacion  teorica) hay que poner muchas iteracionespara que converja. EN la práctiva se comienza con valores altos para observar resultados básicos y cuando se controla bien el proceso el modelo final se realiza con valores bajos de v y muchas iteraciones.
+- EL numero final de iteraciones-arboles M. A menos v, seran necesarias masiteraciones M. Es un parametro a monitorizar (con validacion cruzada y graficos preferentemente) pues teoria y practica coinciden en que a paritr de un punto se puede producir sobreajuste
+- caracteristicas de los arboles:
+    - Criterio de particion (entriopia, gini, varianza,...)
+    - El numero de observaciones minimo en una rama-nodo
+    - EL minimo tamaño apra dividir
+    - Profundidad maxima del arbol
+    -Parametro de complejidad
+    - Otros(numero maximo de divisiones por nodo,...)
+
+(prueba en python)

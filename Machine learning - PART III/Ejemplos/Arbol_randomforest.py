@@ -165,7 +165,7 @@ res_4 = sorted_results[['split0_test_accuracy', 'split1_test_accuracy','split2_t
 res_5 = sorted_results[['split0_test_accuracy', 'split1_test_accuracy','split2_test_accuracy', 'split3_test_accuracy']].iloc[4]
 
 # Crear un boxplot para los cuatro valores de accuracy
-plt.boxplot([res_1.values,res_2.values,res_3.values,res_4.values,res_5.values], labels = ['res_1','res_2','res_3','res_4','res_5'])
+plt.boxplot([res_1.values,res_2.values,res_3.values,res_4.values,res_5.values], label = ['res_1','res_2','res_3','res_4','res_5'])
 plt.title('Boxplots de Accuracy para los 4 Splits')
 plt.xlabel('Splits de Cross Validation')
 plt.ylabel('Accuracy')
@@ -243,7 +243,7 @@ pd.DataFrame(grid_search_c.cv_results_)
 res_1 = pd.DataFrame(grid_search_c.cv_results_)[['split0_test_MAE', 'split1_test_MAE','split2_test_MAE','split3_test_MAE']].iloc[0]
 print(res_1)
 # Crear un boxplot para los cuatro valores de accuracy
-plt.boxplot([res_1.values], labels = ['res_1'])
+plt.boxplot([res_1.values], label = ['res_1'])
 plt.title('Boxplots de la robustez en MAE')
 plt.xlabel('Splits de Cross Validation')
 plt.ylabel('MAE')
