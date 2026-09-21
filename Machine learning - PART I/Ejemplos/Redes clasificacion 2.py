@@ -19,7 +19,9 @@ from sklearn.metrics import confusion_matrix, classification_report, accuracy_sc
 from sklearn.metrics import make_scorer, mean_absolute_error, mean_squared_error, r2_score
 ########################################################################################################
 import os 
-os.chdir('C:/Users/gerar/Desktop/Master/Master/Machine learning - PART I/Data')
+# os.chdir('C:/Users/gerar/Desktop/Master/Master/Machine learning - PART I/Data')
+
+os.chdir('/home/jerry/Documents/master/Master/Machine learning - PART I/Data')
 seed=12345 #fijamos la semilla de aleatorización para que sea la misma en todo el proceso
 #Reemplaza con la ruta correcta y nombre de tu archivo
 file_path = 'SAheart.csv' 
