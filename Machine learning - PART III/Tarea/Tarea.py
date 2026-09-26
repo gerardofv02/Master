@@ -183,37 +183,34 @@ plt.show()
 y_train_pred = arbol.predict_proba(X_train)[:,1]
 y_train_pred_2 = arbol.predict(X_train)
 y_test_pred = arbol.predict_proba(X_test)[:,1]
+y_test_pred_2 = arbol.predict(X_test)
 
-# Medidas de bondad de ajuste en train
 
-# Calcular diferentes medidas de bondad de ajuste
-mae = mean_absolute_error(y_train, y_train_pred_2)
-mse = mean_squared_error(y_train, y_train_pred_2)
-rmse = np.sqrt(mse)
-r2 = r2_score(y_train, y_train_pred_2)
-
-# Imprimir las métricas
-print(f'MAE (Error Absoluto Medio): {mae:.2f}')
-print(f'MSE (Error Cuadrático Medio): {mse:.2f}')
-print(f'RMSE (Raíz del Error Cuadrático Medio): {rmse:.2f}')
-print(f'R²: {r2:.2f}')
 
 ########## vamos con el accuracy score#
 accuracy = accuracy_score(y_train, y_train_pred_2)
-print(f"Accuracy: {accuracy}")
+accuracy_test = accuracy_score(y_test, y_test_pred_2)
+print(f"Accuracy train: {accuracy}")
+print(f"Accuracy test: {accuracy_test}")
 
 ##############3 vamos con la precicsion socre
 precision=precision_score(y_train, y_train_pred_2)
-print(f"Precisión: {precision}")
+precision_test=precision_score(y_test,y_test_pred_2)
+print(f"Precisión train: {precision}")
+print(f"Precisión test: {precision_test}")
 
 ################ vamos con la recall score
 
 ## aqui hablamos de la sensibilidad
 recall = recall_score(y_train, y_train_pred_2)
-print(f"Recall/sensibilidad: {recall}")
+recall_test = recall_score(y_test,y_test_pred_2)
+print(f"Recall/sensibilidad train: {recall}")
+print(f"Recall/sensibilidad test: {recall_test}")
 ###3 vamos con el f1 score
 f1=f1_score(y_train, y_train_pred_2)
-print(f"F1_score: {f1}")
+f1_test=f1_score(y_test, y_test_pred_2)
+print(f"F1_score train: {f1}")
+print(f"F1_score test: {f1_test}")
 
 ## ahora vamos a ver gráficamente algunas de estas métricas
 ## matriz de confusion
@@ -254,7 +251,7 @@ plt.show()
 ## SEgun vemos en las metricas esta muy bien, pero no podemos asegurar que sea el mejor modelo, por ello vamos a ahcer uso del gridsearch para ver cual es el mejor (al ser un conjunto de datos muy chico, vamos a poner como max_depth siempre 5):
 
 params = {
-    'max_depth': [2, 3],
+    'max_depth': [2, 3, 5, 10, 20],
     'min_samples_split': [5, 10, 20, 50, 100],
     'criterion': ["gini", "entropy"]
 }
@@ -294,39 +291,30 @@ y_train_pred = arbol_mejor.predict_proba(X_train)[:,1]
 y_train_pred_2 = arbol_mejor.predict(X_train)
 y_test_pred = arbol_mejor.predict_proba(X_test)[:,1]
 y_test_pred_2 = arbol_mejor.predict(X_test)
+
+## accuracy score
 print(f'Se tiene un accuracy para train de: {accuracy_score(y_train,y_train_pred_2)}')
 print(f'Se tiene un accuracy para test de: {accuracy_score(y_test,y_test_pred_2)}')
 print('Comprobar que la diferencia no sea muy grande por temas de sobreajuste')
-# Medidas de bondad de ajuste en train
-
-# Calcular diferentes medidas de bondad de ajuste
-mae = mean_absolute_error(y_train, y_train_pred_2)
-mse = mean_squared_error(y_train, y_train_pred_2)
-rmse = np.sqrt(mse)
-r2 = r2_score(y_train, y_train_pred_2)
-
-# Imprimir las métricas
-print(f'MAE (Error Absoluto Medio): {mae:.2f}')
-print(f'MSE (Error Cuadrático Medio): {mse:.2f}')
-print(f'RMSE (Raíz del Error Cuadrático Medio): {rmse:.2f}')
-print(f'R²: {r2:.2f}')
-
-########## vamos con el accuracy score#
-accuracy = accuracy_score(y_train, y_train_pred_2)
-print(f"Accuracy: {accuracy}")
 
 ##############3 vamos con la precicsion socre
 precision=precision_score(y_train, y_train_pred_2)
-print(f"Precisión: {precision}")
+precision_test=precision_score(y_test,y_test_pred_2)
+print(f"Precisión train: {precision}")
+print(f"Precisión test: {precision_test}")
 
 ################ vamos con la recall score
 
 ## aqui hablamos de la sensibilidad
 recall = recall_score(y_train, y_train_pred_2)
-print(f"Recall/sensibilidad: {recall}")
+recall_test = recall_score(y_test,y_test_pred_2)
+print(f"Recall/sensibilidad train: {recall}")
+print(f"Recall/sensibilidad test: {recall_test}")
 ###3 vamos con el f1 score
 f1=f1_score(y_train, y_train_pred_2)
-print(f"F1_score: {f1}")
+f1_test=f1_score(y_test, y_test_pred_2)
+print(f"F1_score train: {f1}")
+print(f"F1_score test: {f1_test}")
 
 ## ahora vamos a ver gráficamente algunas de estas métricas
 ## matriz de confusion
@@ -419,34 +407,26 @@ y_test_pred_2_rf = arbol_rf.predict(X_test)
 print(f'Se tiene un accuracy para train de: {accuracy_score(y_train,y_train_pred_2_rf)}')
 print(f'Se tiene un accuracy para test de: {accuracy_score(y_test,y_test_pred_2_rf)}')
 print('Comprobar que la diferencia no sea muy grande por temas de sobreajuste')
-# Calcular diferentes medidas de bondad de ajuste
-mae = mean_absolute_error(y_train, y_train_pred_2_rf)
-mse = mean_squared_error(y_train, y_train_pred_2_rf)
-rmse = np.sqrt(mse)
-r2 = r2_score(y_train, y_train_pred_2_rf)
 
-# Imprimir las métricas
-print(f'MAE (Error Absoluto Medio): {mae:.2f}')
-print(f'MSE (Error Cuadrático Medio): {mse:.2f}')
-print(f'RMSE (Raíz del Error Cuadrático Medio): {rmse:.2f}')
-print(f'R²: {r2:.2f}')
-
-########## vamos con el accuracy score#
-accuracy = accuracy_score(y_train, y_train_pred_2_rf)
-print(f"Accuracy: {accuracy}")
 
 ##############3 vamos con la precicsion socre
 precision=precision_score(y_train, y_train_pred_2_rf)
-print(f"Precisión: {precision}")
+precision_test=precision_score(y_test,y_test_pred_2_rf)
+print(f"Precisión train: {precision}")
+print(f"Precisión test: {precision_test}")
 
 ################ vamos con la recall score
 
 ## aqui hablamos de la sensibilidad
 recall = recall_score(y_train, y_train_pred_2_rf)
-print(f"Recall/sensibilidad: {recall}")
+recall_test = recall_score(y_test,y_test_pred_2_rf)
+print(f"Recall/sensibilidad train: {recall}")
+print(f"Recall/sensibilidad test: {recall_test}")
 ###3 vamos con el f1 score
 f1=f1_score(y_train, y_train_pred_2_rf)
-print(f"F1_score: {f1}")
+f1_test=f1_score(y_test, y_test_pred_2_rf)
+print(f"F1_score train: {f1}")
+print(f"F1_score test: {f1_test}")
 
 ## ahora vamos a ver gráficamente algunas de estas métricas
 ## matriz de confusion
@@ -500,7 +480,7 @@ plt.show()
 
 # como estamos viendo por accuracy, nos quedamos el modelo 1
 
-arbol_rf_mejor = RandomForestClassifier(**sorted_results['params'].iloc[0], random_state=seed)
+arbol_rf_mejor = RandomForestClassifier(**sorted_results_rf['params'].iloc[0], random_state=seed)
 arbol_rf_mejor.fit(X_train, y_train)
 
 # Predicciones en conjunto de entrenamiento y prueba
@@ -517,34 +497,26 @@ y_test_pred_2_rf = arbol_rf_mejor.predict(X_test)
 print(f'Se tiene un accuracy para train de: {accuracy_score(y_train,y_train_pred_2_rf)}')
 print(f'Se tiene un accuracy para test de: {accuracy_score(y_test,y_test_pred_2_rf)}')
 print('Comprobar que la diferencia no sea muy grande por temas de sobreajuste')
-# Calcular diferentes medidas de bondad de ajuste
-mae = mean_absolute_error(y_train, y_train_pred_2_rf)
-mse = mean_squared_error(y_train, y_train_pred_2_rf)
-rmse = np.sqrt(mse)
-r2 = r2_score(y_train, y_train_pred_2_rf)
 
-# Imprimir las métricas
-print(f'MAE (Error Absoluto Medio): {mae:.2f}')
-print(f'MSE (Error Cuadrático Medio): {mse:.2f}')
-print(f'RMSE (Raíz del Error Cuadrático Medio): {rmse:.2f}')
-print(f'R²: {r2:.2f}')
-
-########## vamos con el accuracy score#
-accuracy = accuracy_score(y_train, y_train_pred_2_rf)
-print(f"Accuracy: {accuracy}")
 
 ##############3 vamos con la precicsion socre
 precision=precision_score(y_train, y_train_pred_2_rf)
-print(f"Precisión: {precision}")
+precision_test=precision_score(y_test,y_test_pred_2_rf)
+print(f"Precisión train: {precision}")
+print(f"Precisión test: {precision_test}")
 
 ################ vamos con la recall score
 
 ## aqui hablamos de la sensibilidad
 recall = recall_score(y_train, y_train_pred_2_rf)
-print(f"Recall/sensibilidad: {recall}")
+recall_test = recall_score(y_test,y_test_pred_2_rf)
+print(f"Recall/sensibilidad train: {recall}")
+print(f"Recall/sensibilidad test: {recall_test}")
 ###3 vamos con el f1 score
 f1=f1_score(y_train, y_train_pred_2_rf)
-print(f"F1_score: {f1}")
+f1_test=f1_score(y_test, y_test_pred_2_rf)
+print(f"F1_score train: {f1}")
+print(f"F1_score test: {f1_test}")
 
 ## ahora vamos a ver gráficamente algunas de estas métricas
 ## matriz de confusion
@@ -602,34 +574,25 @@ y_test_pred_2_xgb = arbol_xgb.predict(X_test)
 print(f'Se tiene un accuracy para train de: {accuracy_score(y_train,y_train_pred_2_xgb)}')
 print(f'Se tiene un accuracy para test de: {accuracy_score(y_test,y_test_pred_2_xgb)}')
 print('Comprobar que la diferencia no sea muy grande por temas de sobreajuste')
-# Calcular diferentes medidas de bondad de ajuste
-mae = mean_absolute_error(y_train, y_train_pred_2_xgb)
-mse = mean_squared_error(y_train, y_train_pred_2_xgb)
-rmse = np.sqrt(mse)
-r2 = r2_score(y_train, y_train_pred_2_xgb)
-
-# Imprimir las métricas
-print(f'MAE (Error Absoluto Medio): {mae:.2f}')
-print(f'MSE (Error Cuadrático Medio): {mse:.2f}')
-print(f'RMSE (Raíz del Error Cuadrático Medio): {rmse:.2f}')
-print(f'R²: {r2:.2f}')
-
-########## vamos con el accuracy score#
-accuracy = accuracy_score(y_train, y_train_pred_2_xgb)
-print(f"Accuracy: {accuracy}")
 
 ##############3 vamos con la precicsion socre
 precision=precision_score(y_train, y_train_pred_2_xgb)
-print(f"Precisión: {precision}")
+precision_test=precision_score(y_test,y_test_pred_2_xgb)
+print(f"Precisión train: {precision}")
+print(f"Precisión test: {precision_test}")
 
 ################ vamos con la recall score
 
 ## aqui hablamos de la sensibilidad
 recall = recall_score(y_train, y_train_pred_2_xgb)
-print(f"Recall/sensibilidad: {recall}")
+recall_test = recall_score(y_test,y_test_pred_2_xgb)
+print(f"Recall/sensibilidad train: {recall}")
+print(f"Recall/sensibilidad test: {recall_test}")
 ###3 vamos con el f1 score
 f1=f1_score(y_train, y_train_pred_2_xgb)
-print(f"F1_score: {f1}")
+f1_test=f1_score(y_test, y_test_pred_2_xgb)
+print(f"F1_score train: {f1}")
+print(f"F1_score test: {f1_test}")
 
 ## ahora vamos a ver gráficamente algunas de estas métricas
 ## matriz de confusion
@@ -656,7 +619,7 @@ params_xgb = {
 #recordar que arbol2 es el árbol cuyas VI son todas las variables.
 # cv = crossvalidation
 grid_search_xgb = GridSearchCV(estimator=arbol_xgb, 
-                           param_grid=params_rf, 
+                           param_grid=params_xgb, 
                            cv=4, scoring = scoring_metrics, refit='accuracy') # vemos conm accuracy ya q es loq  pide el modelo
 
 grid_search_xgb.fit(X_train, y_train)
@@ -685,7 +648,7 @@ plt.show()
 
 # como estamos viendo por accuracy, nos quedamos el modelo 1
 
-arbol_xgb_mejor = RandomForestClassifier(**sorted_results['params'].iloc[0], random_state=seed)
+arbol_xgb_mejor = XGBClassifier(**sorted_results_xgb['params'].iloc[0], random_state=seed)
 arbol_xgb_mejor.fit(X_train, y_train)
 
 # Predicciones en conjunto de entrenamiento y prueba
@@ -702,34 +665,26 @@ y_test_pred_2_xgb = arbol_xgb_mejor.predict(X_test)
 print(f'Se tiene un accuracy para train de: {accuracy_score(y_train,y_train_pred_2_xgb)}')
 print(f'Se tiene un accuracy para test de: {accuracy_score(y_test,y_test_pred_2_xgb)}')
 print('Comprobar que la diferencia no sea muy grande por temas de sobreajuste')
-# Calcular diferentes medidas de bondad de ajuste
-mae = mean_absolute_error(y_train, y_train_pred_2_xgb)
-mse = mean_squared_error(y_train, y_train_pred_2_xgb)
-rmse = np.sqrt(mse)
-r2 = r2_score(y_train, y_train_pred_2_xgb)
 
-# Imprimir las métricas
-print(f'MAE (Error Absoluto Medio): {mae:.2f}')
-print(f'MSE (Error Cuadrático Medio): {mse:.2f}')
-print(f'RMSE (Raíz del Error Cuadrático Medio): {rmse:.2f}')
-print(f'R²: {r2:.2f}')
-
-########## vamos con el accuracy score#
-accuracy = accuracy_score(y_train, y_train_pred_2_xgb)
-print(f"Accuracy: {accuracy}")
 
 ##############3 vamos con la precicsion socre
 precision=precision_score(y_train, y_train_pred_2_xgb)
-print(f"Precisión: {precision}")
+precision_test=precision_score(y_test,y_test_pred_2_xgb)
+print(f"Precisión train: {precision}")
+print(f"Precisión test: {precision_test}")
 
 ################ vamos con la recall score
 
 ## aqui hablamos de la sensibilidad
 recall = recall_score(y_train, y_train_pred_2_xgb)
-print(f"Recall/sensibilidad: {recall}")
+recall_test = recall_score(y_test,y_test_pred_2_xgb)
+print(f"Recall/sensibilidad train: {recall}")
+print(f"Recall/sensibilidad test: {recall_test}")
 ###3 vamos con el f1 score
 f1=f1_score(y_train, y_train_pred_2_xgb)
-print(f"F1_score: {f1}")
+f1_test=f1_score(y_test, y_test_pred_2_xgb)
+print(f"F1_score train: {f1}")
+print(f"F1_score test: {f1_test}")
 
 ## ahora vamos a ver gráficamente algunas de estas métricas
 ## matriz de confusion
