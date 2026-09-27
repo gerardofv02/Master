@@ -97,3 +97,41 @@ ES otra variante enla que realizar un train/test completamente aleatorio cada ve
 
 Pros y cons:
     - Cada repeticion puede incluir los mismos datos en cada conjunto
+
+## Métricas
+
+SIrven para evaluar la bondad de un modelo
+Las metricas influyen ademas en el entrenamiento de cualquier modelo, ya que son la funcion de perdida que el algoritmo siempre trata de optimizar
+DEpendiendo del tipo del problema, las metricas son diferentes. En este ejemplo, trabajaremoslas siguientes métricas de clasificación:
+    - COnfussion matrix
+    - accuracy
+    - LOgarithmic loss
+    - AUC - Area under roc curve
+
+### matriz de confusion
+
+Tras entrenar un algoritmo de clasificacion, podemos examinar los resutlados en esta matriz
+A partir de esta matriz podemos crear diversas métricas: accuracy, recall,...
+
+### Accuracy
+
+ES la proporción de registros correctamente clasificados
+    - COmo accuracy, otras métricas pueden extraerse de la matriz de confusion: precisión,..
+
+### Negative logarithmic loss
+
+Basada en la entropía y la función log-likehood (verosimilitud)
+
+### AUC
+
+ROC nos permite estimar la relación entre tasa de falsos positivos y verdaderos positivos
+    - EL área máxima es 1 y el mínimo es 0.5
+
+
+## Parametrizacion de algoritmos
+
+Cada algoritmo ofrece distintas opciones de parametrización. DEpendiendo del algoritmo elegido como base del modelo, ahora tendremos que tomar la mejor configuración para que los resultados sean mejores
+
+### Grid search
+
+Vamos a configurar alguna de estas aprametrizaciones y ejecutar varias pruebas de modelos para ver, como respuesta, qué parametrización ofrece resultados óptimos
