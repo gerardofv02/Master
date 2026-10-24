@@ -1,0 +1,4 @@
+This is a sample text file.
+Each line represents an element in the dataset.
+We can apply various transformations to the data.
+This makes it easy to prepare data for training.
